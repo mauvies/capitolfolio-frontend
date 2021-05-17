@@ -1,16 +1,15 @@
-import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom';
 
-import Home from '../views/Home'
-import Register from '../views/Register'
+import Browse from '../views/Browse';
+import Favorites from '../views/Favorites';
 
 function Router() {
-    return (
-        <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/register" component={Register} />
-        </Switch>
-    )
+  return (
+    <Switch>
+      <Route exact path="/" component={Browse} />
+      <Route exact path="/favorites" component={Favorites} />
+    </Switch>
+  );
 }
 
-export default Router
+export default Router;
