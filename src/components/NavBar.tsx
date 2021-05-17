@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { SearchIcon, HeartIcon } from '@heroicons/react/outline';
+import { HeartIcon } from '@heroicons/react/outline';
 
 const NavBar = () => {
   return (
@@ -11,14 +11,6 @@ const NavBar = () => {
           width="40px"
         />
         <h1 className="hidden md:block">RepoZoom</h1>
-        <div className="flex items-center justify-between bg-gray-100 rounded-2xl w-16 h-10 flex-1 px-3 mx-6">
-          <SearchIcon className="text-gray-400 h-6 w-6 " />
-          <input
-            type="text"
-            className="w-5/6 bg-gray-100 outline-none"
-            placeholder="Search Github"
-          />
-        </div>
         <Link
           className="text-base font-medium text-gray-500 hover:text-gray-900"
           to="/favorites"
