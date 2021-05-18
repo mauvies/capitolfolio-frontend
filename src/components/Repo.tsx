@@ -1,36 +1,65 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import { DesktopComputerIcon, StarIcon } from '@heroicons/react/outline';
 import { StarIcon as StarIconSolid } from '@heroicons/react/solid';
+import { DesktopComputerIcon, StarIcon } from '@heroicons/react/outline';
+
+import { toggleRepo } from '../services/fetchApi';
 
 const Repo = (props: any) => {
   const { repo } = props;
+  const [isFav, setIsFav] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (repo.isFav) setIsFav(true);
+  }, []);
+
   const formatDate = (date: string) => {
     return moment(date, 'YYYY-MM-DD').fromNow();
   };
 
+  const toggle = async (): Promise<void> => {
+    setIsLoading(true);
+    try {
+      const response = await toggleRepo(repo.id, isFav);
+      if (response?.status === 200) setIsFav(!isFav);
+    } catch (error) {
+      throw error;
+    }
+    setIsLoading(false);
+  };
+
   return (
-    <div className="flex  items-center py-6 border-t pr-4 text-xs text-gray-800">
+    <div className="flex items-center py-6 pr-4 text-xs text-gray-800 border-t">
       <div className="flex flex-1">
-        <DesktopComputerIcon className="h-4 w-4 text-gray-600 mr-2 mt-2" />
+        <DesktopComputerIcon className="w-4 h-4 mt-2 mr-2 text-gray-600" />
         <div className="flex-1 pr-4">
-          <Link to="/" className="text-blue-700 text-lg">
+          <Link to="/" className="text-lg text-blue-700">
             {repo.fullName}
           </Link>
           <p className="text-base">{repo.description}</p>
           <p className="text-xs font-semibold">
             Language: {repo.language || 'Unknown'}
           </p>
-          <p className="text-xs py-1">Clone URL: {repo.cloneUrl}</p>
-          <p className="text-sm text-gray-500">{formatDate(repo.updatedAt)}</p>
+          <p className="py-1 text-xs">Clone URL: {repo.cloneUrl}</p>
+          <p className="text-sm text-gray-500">
+            Updated {formatDate(repo.updatedAt)}
+          </p>
         </div>
       </div>
-      {repo.isFav ? (
-        <StarIconSolid className="w-7 h-7 text-yellow-600" />
-      ) : (
-        <StarIcon className="w-6 h-6 text-gray-600" />
-      )}
+      <button
+        onClick={() => toggle()}
+        className="cursor-pointer focus:outline-none"
+        disabled={isLoading}
+      >
+        {isFav ? (
+          <StarIconSolid className="text-yellow-400 w-7 h-7" />
+        ) : (
+          <StarIcon className="w-6 h-6 text-gray-600" />
+        )}
+      </button>
     </div>
   );
 };
