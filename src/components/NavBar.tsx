@@ -1,22 +1,29 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { HeartIcon } from '@heroicons/react/outline';
 
 const NavBar = () => {
+  const currentLocation = useLocation();
+
+  const dinamicNavLink = (): boolean => {
+    return currentLocation.pathname === '/';
+  };
+
   return (
     <nav className="w-screen">
-      <div className="flex items-center max-w-7xl mx-auto py-3 px-4 lg:px-8 justify-between">
+      <div className="flex items-center justify-between max-w-5xl px-4 py-3 mx-auto lg:px-8">
         <img
           src="https://media-exp1.licdn.com/dms/image/C4D0BAQEEERhn4ePNxw/company-logo_200_200/0/1602756568651?e=2159024400&v=beta&t=STDJp_VWu-jDQ_IRXNvc2m5NQTLGPbbKWrWjxUax9xQ"
           alt="Userzoom Logo"
           width="40px"
         />
-        <h1 className="hidden md:block">RepoZoom</h1>
         <Link
           className="text-base font-medium text-gray-500 hover:text-gray-900"
-          to="/favorites"
+          to={dinamicNavLink() ? '/favorites' : '/'}
         >
-          <HeartIcon className="text-gray-500 h-8 w-8 md:hidden" />
-          <p className="hidden md:block">Favorites</p>
+          <HeartIcon className="w-8 h-8 text-gray-500 md:hidden" />
+          <p className="hidden md:block md:mx-4">
+            {dinamicNavLink() ? 'Favorites' : 'Home'}
+          </p>
         </Link>
       </div>
     </nav>
