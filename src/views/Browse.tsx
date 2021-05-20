@@ -1,25 +1,36 @@
 import React, { useState } from 'react';
-import { SearchIcon } from '@heroicons/react/outline';
 
 import Pagination from '../components/Pagination';
 import RepoIndex from '../components/RepoIndex';
 import Loading from '../components/Loading';
 import { getOwnerRepos } from '../services/fetchApi';
+import SearchBar from '../components/SearchBar';
 
 const Browse = () => {
   const [input, setInput] = useState<string>('');
+  const [inputError, setInputError] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [ownerRepos, setOwnerRepos] = useState<Owner>(initialOwnerState);
 
-  const onChange = (e: React.FormEvent<HTMLInputElement>): void => {
+  const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
     const { value }: { value: string } = e.currentTarget;
     setInput(value);
   };
 
   const handleSubmit = (e: React.SyntheticEvent): void => {
     e.preventDefault();
-    if (input) fetchRepoZoomApi();
+    if (inputHasError(input)) {
+      setInputError(true);
+    } else {
+      fetchRepoZoomApi();
+      setInputError(false);
+    }
+  };
+
+  const inputHasError = (value: string) => {
+    const re = /[A-Za-z0-9]/g;
+    return !re.test(value) || value === '';
   };
 
   const fetchRepoZoomApi = async (page: number = 1): Promise<void> => {
@@ -42,31 +53,22 @@ const Browse = () => {
     await fetchRepoZoomApi(page);
   };
 
-  const isInputEmptyOrError = () =>
-    !ownerRepos.reposNumber && !isLoading && !error;
-
   return (
     <section className="max-w-5xl px-6 py-4 mx-auto lg:px-8">
-      <form
-        className="flex items-center justify-between flex-1 w-64 h-10 px-3 mx-auto mb-8 bg-gray-100 rounded-2xl"
-        onSubmit={handleSubmit}
-      >
-        <SearchIcon className="w-6 h-6 text-gray-400 " />
-        <input
-          type="text"
-          name="search"
-          className="w-5/6 bg-gray-100 outline-none"
-          placeholder="Search Github user"
-          value={input}
-          onChange={onChange}
-        />
-      </form>
+      <SearchBar
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        input={input}
+        inputError={inputError}
+      />
 
-      <p className="my-6 text-lg font-semibold">
-        {isInputEmptyOrError()
-          ? 'Start searching Github users or oganizations to browse'
-          : 'There is a problem with the API request'}
-      </p>
+      {!ownerRepos.reposNumber && !isLoading && (
+        <p className="my-16 text-lg font-semibold">
+          {!error
+            ? 'Start searching Github users or oganizations to browse'
+            : 'There is a problem with the API request'}
+        </p>
+      )}
 
       {isLoading ? (
         <Loading />
