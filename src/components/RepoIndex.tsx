@@ -1,13 +1,13 @@
-import { Owner } from '../views/Browse';
-import Repo from './Repo';
+import { IOwner } from '../views/Browse';
+import IRepo from './Repo';
 
-const RepoIndex = (props: Owner) => {
+const RepoIndex = (props: IOwner) => {
   return (
     <div className="flex flex-col">
+
       {props.repos.length !== 0 &&
-        props.repos.map((repo: any) => {
-          return <Repo key={repo.id} repo={repo} />;
-        })}
+        props.repos.map((repo: any) => <IRepo key={repo.id} repo={repo} />)}
+
     </div>
   );
 };

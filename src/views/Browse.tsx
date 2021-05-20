@@ -5,13 +5,14 @@ import RepoIndex from '../components/RepoIndex';
 import Loading from '../components/Loading';
 import { getOwnerRepos } from '../services/fetchApi';
 import SearchBar from '../components/SearchBar';
+import inputHasError from '../services/checkInputError';
 
 const Browse = () => {
   const [input, setInput] = useState<string>('');
   const [inputError, setInputError] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const [apiFetchError, setApiFetchError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [ownerRepos, setOwnerRepos] = useState<Owner>(initialOwnerState);
+  const [ownerRepos, setOwnerRepos] = useState<IOwner>(initialOwnerState);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
     const { value }: { value: string } = e.currentTarget;
@@ -20,30 +21,30 @@ const Browse = () => {
 
   const handleSubmit = (e: React.SyntheticEvent): void => {
     e.preventDefault();
+
     if (inputHasError(input)) {
       setInputError(true);
+
     } else {
       fetchRepoZoomApi();
       setInputError(false);
     }
-  };
 
-  const inputHasError = (value: string) => {
-    const re = /[A-Za-z0-9]/g;
-    return !re.test(value) || value === '';
   };
 
   const fetchRepoZoomApi = async (page: number = 1): Promise<void> => {
-    setError(false);
+    setApiFetchError(false);
     setIsLoading(true);
     setOwnerRepos(initialOwnerState);
 
     try {
       const response = await getOwnerRepos(input, page);
+
       if (response) setOwnerRepos(response);
-      else setError(true);
+      else setApiFetchError(true);
+
     } catch (error) {
-      setError(true);
+      setApiFetchError(true);
     } finally {
       setIsLoading(false);
     }
@@ -64,7 +65,7 @@ const Browse = () => {
 
       {!ownerRepos.reposNumber && !isLoading && (
         <p className="my-16 text-lg font-semibold">
-          {!error
+          {!apiFetchError
             ? 'Start searching Github users or oganizations to browse'
             : 'There is a problem with the API request'}
         </p>
@@ -105,7 +106,7 @@ const initialOwnerState = {
   username: '',
 };
 
-export interface Repo {
+export interface IRepo {
   id: string;
   name: string;
   cloneUrl: string;
@@ -113,7 +114,7 @@ export interface Repo {
   createdAt: string;
   updatedAt: string;
 }
-export interface Owner {
+export interface IOwner {
   avatar: string;
   bio: string;
   createdAt: string;
@@ -121,7 +122,7 @@ export interface Owner {
   id: number;
   name: string;
   fullName: string;
-  repos: Repo[];
+  repos: IRepo[];
   page: number;
   reposNumber: number;
   type: string;

@@ -42,18 +42,16 @@ const Favorites = () => {
 
   return (
     <section className="max-w-5xl px-6 py-4 mx-auto lg:px-8">
-      <p className="my-6 text-lg font-semibold">Favorites repos list</p>
-      {favRepos.length !== 0 &&
-        favRepos.map((fav: FavRepoInterface) => {
-          return (
-            <FavRepo
-              key={fav.repoId}
-              fav={fav}
-              isLoading={isLoading}
-              deleteRepo={deleteRepo}
-            />
-          );
-        })}
+      <p className="my-6 text-lg font-semibold">{ favRepos ? 'Favorites repos list' : 'You have not added favorite repos yet'}</p>
+      {favRepos && favRepos.length !== 0 &&
+        favRepos.map((fav: FavRepoInterface) => (
+          <FavRepo
+            key={fav.repoId}
+            fav={fav}
+            isLoading={isLoading}
+            deleteRepo={deleteRepo}
+          />
+        ))}
     </section>
   );
 };

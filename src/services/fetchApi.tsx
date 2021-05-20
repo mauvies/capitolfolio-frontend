@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
-import { Owner, Repo } from '../views/Browse';
+import { IOwner, IRepo } from '../views/Browse';
 import { FavRepoInterface } from '../views/Favorites';
 
 export const getOwnerRepos = async (
   owner: string,
   page: number = 1
-): Promise<Owner> => {
+): Promise<IOwner> => {
   try {
     const response = await axios.post('http://localhost:5000/repos', {
       owner,
@@ -18,7 +18,7 @@ export const getOwnerRepos = async (
   }
 };
 
-export const toggleRepo = async (id: Repo['id'], isFav: boolean) => {
+export const toggleRepo = async (id: IRepo['id'], isFav: boolean) => {
   try {
     const response = isFav
       ? await axios.delete(`http://localhost:5000/favorites/${id}`)

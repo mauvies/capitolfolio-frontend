@@ -2,7 +2,6 @@ import PaginationButton, { PaginationAction } from './PaginationButton';
 
 const NEXT = 'Next';
 const PREVIOUS = 'Previous';
-
 interface PaginationProps {
   reposNumber: number;
   page: number;
@@ -30,8 +29,10 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   if (!reposNumber) return <></>;
+  
   return (
     <section className="flex items-center justify-between my-3">
+
       <p>
         Showing <span className="font-semibold">{numberOfReposToShow()}</span>{' '}
         to{' '}

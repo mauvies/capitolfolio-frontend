@@ -19,6 +19,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
       onSubmit={handleSubmit}
     >
       <SearchIcon className="w-6 h-6 text-gray-400 " />
+
       <input
         type="text"
         name="search"
@@ -27,6 +28,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         value={input}
         onChange={handleChange}
       />
+
       {inputError && !input && (
         <p className="mx-auto text-xs font-semibold text-red-700 absolute bottom-[-23px] left-0">
           Please introduce a valid account
