@@ -37,7 +37,7 @@ const Repo: React.FC<RepoProps> = ({ repo }) => {
         <DesktopComputerIcon className="w-4 h-4 mt-2 mr-2 text-gray-600" />
 
         <div className="flex-1 pr-4">
-          <a href={repo.cloneUrl} target="_blank" className="text-lg text-blue-700">
+          <a href={repo.cloneUrl} target="_blank" rel="noreferrer" className="text-lg text-blue-700">
             {repo.fullName}
           </a>
 
