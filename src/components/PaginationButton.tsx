@@ -1,13 +1,19 @@
 export type PaginationAction = string;
 
-const PaginationButton = (props: any) => {
+export interface PaginationActionProps {
+  label: string;
+  paginationAction: (label: string) => void
+}
+
+const PaginationButton: React.FC<PaginationActionProps> = ({ label, paginationAction }) => {
     
   return (
     <button
-      className="w-20 py-2 mx-2 text-sm border border-gray-500 rounded"
-      onClick={() => props.paginationAction(props.label)}
+      className="w-20 py-2 mx-2
+       text-sm border border-gray-500 rounded"
+      onClick={() => paginationAction(label)}
     >
-      {props.label}
+      {label}
     </button>
   );
 };
