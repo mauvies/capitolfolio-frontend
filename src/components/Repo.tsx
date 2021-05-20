@@ -1,14 +1,17 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 
 import { StarIcon as StarIconSolid } from '@heroicons/react/solid';
 import { DesktopComputerIcon, StarIcon } from '@heroicons/react/outline';
 
 import { toggleRepo } from '../services/fetchApi';
 import formatDate from '../services/formatDate';
+import { IRepo } from '../views/Browse';
 
-const Repo = (props: any) => {
-  const { repo } = props;
+interface RepoProps {
+  repo: IRepo
+}
+
+const Repo: React.FC<RepoProps> = ({ repo }) => {
   const [isFav, setIsFav] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,9 +37,9 @@ const Repo = (props: any) => {
         <DesktopComputerIcon className="w-4 h-4 mt-2 mr-2 text-gray-600" />
 
         <div className="flex-1 pr-4">
-          <Link to="/" className="text-lg text-blue-700">
+          <a href={repo.cloneUrl} target="_blank" className="text-lg text-blue-700">
             {repo.fullName}
-          </Link>
+          </a>
 
           <p className="text-base">{repo.description}</p>
 

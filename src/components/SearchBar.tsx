@@ -15,7 +15,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   return (
     <form
-      className="relative flex items-center justify-between flex-1 w-64 h-10 px-3 mx-auto bg-gray-100 rounded-2xl"
+      className="relative flex items-center justify-between flex-1 w-64 h-10 px-3 mx-auto bg-gray-100 rounded-2xl mb-10"
       onSubmit={handleSubmit}
     >
       <SearchIcon className="w-6 h-6 text-gray-400 " />

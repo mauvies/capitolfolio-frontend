@@ -64,7 +64,7 @@ const Browse = () => {
       />
 
       {!ownerRepos.reposNumber && !isLoading && (
-        <p className="my-16 text-lg font-semibold">
+        <p className="my-10 text-lg font-semibold">
           {!apiFetchError
             ? 'Start searching Github users or oganizations to browse'
             : 'There is a problem with the API request'}
@@ -80,7 +80,7 @@ const Browse = () => {
             page={ownerRepos.page}
             fetchSpecificReposPage={fetchSpecificReposPage}
           />
-          <RepoIndex {...ownerRepos} />
+          <RepoIndex repos={ownerRepos.repos} />
         </>
       )}
     </section>
@@ -108,8 +108,11 @@ const initialOwnerState = {
 
 export interface IRepo {
   id: string;
+  fullName: string;
   name: string;
   cloneUrl: string;
+  description: string;
+  language: string;
   isFav: boolean;
   createdAt: string;
   updatedAt: string;

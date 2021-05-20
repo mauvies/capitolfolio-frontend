@@ -9,13 +9,13 @@ import {
 import formatDate from '../services/formatDate';
 import { FavRepoInterface } from '../views/Favorites';
 
-interface Props {
+interface FavProps {
   fav: FavRepoInterface;
   isLoading: boolean;
   deleteRepo: (repoId: FavRepoInterface['repoId']) => void;
 }
 
-const FavRepo: React.FC<Props> = ({ fav, isLoading, deleteRepo }) => {
+const FavRepo: React.FC<FavProps> = ({ fav, isLoading, deleteRepo }) => {
   return (
     <div className="flex items-center py-6 pr-4 text-xs text-gray-800 border-t cursor-pointer">
       <div className="flex flex-1">
@@ -23,9 +23,9 @@ const FavRepo: React.FC<Props> = ({ fav, isLoading, deleteRepo }) => {
         <DesktopComputerIcon className="w-4 h-4 mt-2 mr-2 text-gray-600" />
 
         <div className="flex-1 pr-4">
-          <Link to="/" className="text-lg text-blue-700">
+          <a href={fav.cloneUrl} target="_blank" className="text-lg text-blue-700">
             {fav.name}
-          </Link>
+          </a>
 
           <p className="text-base">{fav.description}</p>
 

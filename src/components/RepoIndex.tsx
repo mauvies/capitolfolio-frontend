@@ -1,12 +1,17 @@
-import { IOwner } from '../views/Browse';
-import IRepo from './Repo';
+import React from 'react';
+import { IRepo } from '../views/Browse';
+import Repo from './Repo';
 
-const RepoIndex = (props: IOwner) => {
+interface RepoIndexProps {
+  repos: IRepo[]
+}
+
+const RepoIndex: React.FC<RepoIndexProps> = ({ repos }) => {
   return (
     <div className="flex flex-col">
 
-      {props.repos.length !== 0 &&
-        props.repos.map((repo: any) => <IRepo key={repo.id} repo={repo} />)}
+      {repos.length !== 0 &&
+        repos.map((repo: IRepo) => <Repo key={repo.id} repo={repo} />)}
 
     </div>
   );
