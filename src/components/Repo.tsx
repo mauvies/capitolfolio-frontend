@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 
 import { StarIcon as StarIconSolid } from '@heroicons/react/solid';
 import { DesktopComputerIcon, StarIcon } from '@heroicons/react/outline';
 
 import { toggleRepo } from '../services/fetchApi';
+import formatDate from '../services/formatDate';
 
 const Repo = (props: any) => {
   const { repo } = props;
@@ -14,11 +14,7 @@ const Repo = (props: any) => {
 
   useEffect(() => {
     if (repo.isFav) setIsFav(true);
-  }, []);
-
-  const formatDate = (date: string) => {
-    return moment(date, 'YYYY-MM-DD').fromNow();
-  };
+  }, [repo.isFav]);
 
   const toggle = async (): Promise<void> => {
     setIsLoading(true);
