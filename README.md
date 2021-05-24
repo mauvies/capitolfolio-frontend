@@ -38,19 +38,6 @@ Another cool feature I implemented was the pagination. By default, Github limits
 
 The second view corresponds to the favorite repositories which has been added by the user, offering the possibility to remove them from the list and database. There is also a detail button (eye icon) which is a feature I could not complete due to the extend of the test.
 
-### Docker
-
-To pull backend image
-`docker pull mauvies/repo-zoom:backend`
-
-To pull frontend image
-`docker pull mauvies/repo-zoom:frontend`
-
-Or there is another repository which I created to store the docker-compose.yml. At this point I really have no more time to continue working on the test (Friday 21/05/2021 08:57:00), because in a few hours I am leaving with my girlfriend to Granada for her birthday. So, I suggest to create a parent folder with this file (docker-compose.yml) and include the other two projects inside of it (api and frontend). After the following command can be run and it will start the docker container.
-
-`docker-compose up`
-
-
 ### To do
 
 The app is still missing important features such as testing and error handleling, which I have thought about how to implement it, but it woult take much more time. Another cool feature could be filters, since Github API already offers some of them.
